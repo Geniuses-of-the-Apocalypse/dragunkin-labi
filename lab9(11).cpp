@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 using namespace std;
 
 template<typename T>
@@ -74,8 +75,17 @@ public:
     }
     
     
-    void writeToStream(ostream& os) {
-        writeToStreamR(root, os);
+     friend ostream& operator<<(ostream& os, BinaryTree& tree) {
+        tree.writeToStreamR(tree.root, os);
+        return os;
+    }
+    friend istream& operator>>(istream& is, BinaryTree& tree) {
+        tree.clear();
+        T value;
+        while (is >> value) {
+            tree.insert(value);
+        }
+        return is;
     }
      void print() {
         cout << "Дерево:" << endl;
@@ -83,15 +93,6 @@ public:
         printR(root, 0, 40);
         cout << "====================" << endl;
     }
-    
-    void readFromStream(istream& is) {
-        clear();
-        T value;
-        while (is >> value) {
-            insert(value);
-        }
-    }
-    
     
     void clear() {
         clearR(root);
@@ -188,13 +189,12 @@ int main() {
     BinaryTree<int> tree;
     
  
-    cout << "Добавляем элементы: 5, 3, 7, 2, 4" << endl;
     tree.insert(5);
     tree.insert(3);
     tree.insert(7);
     tree.insert(2);
     tree.insert(4);
-    
+     cout << "Добавляем элементы:"<<tree << endl;
     tree.print();
     cout << "Есть ли 3 в дереве: " << tree.poisk(3) << endl;
     cout << "Есть ли 6 в дереве: " << tree.poisk(6) << endl;
@@ -209,11 +209,19 @@ int main() {
     cout << "Содержимое после удаления: " << tree.toString() << endl;
    
     cout << "Дерево пустое: " << tree.empty() << endl;
-    
+
     
     tree.clear();
     cout << "После очистки дерево пустое: " << tree.empty() << endl;
-    
+    cout<<tree;
+    BinaryTree<int> tree2;
+    stringstream ss;
+    ss << "10 6 14 3 8 12 16";
+
+    ss >> tree2;
+    cout << "Новое дерево из строки: " << tree2 << endl;
+    tree2.print();
+    tree2.clear();
     return 0;
 }
 // Если не запускается нужно поставить c/c++ compile run
