@@ -37,22 +37,22 @@ public:
         normalize();
     }
     
-    Time(const string &timeStr) {
-        // Парсинг строки формата "HH:MM:SS"
+    Time(const string &timeStr) : hours(0), minutes(0), seconds(0){
+        // строки формата "HH:MM:SS"
         hours = (timeStr[0] - '0') * 10 + (timeStr[1] - '0');
         minutes = (timeStr[3] - '0') * 10 + (timeStr[4] - '0');
         seconds = (timeStr[6] - '0') * 10 + (timeStr[7] - '0');
         normalize();
     }
     
-    Time(int totalSeconds) {
+    Time(int totalSeconds) : hours(0), minutes(0), seconds(0) {
         hours = totalSeconds / 3600;
         minutes = (totalSeconds % 3600) / 60;
         seconds = totalSeconds % 60;
         normalize();
     }
     
-    Time(const Time &other) {
+    Time(const Time &other) hours(other.hours), minutes(other.minutes), seconds(other.seconds) {
         hours = other.hours;
         minutes = other.minutes;
         seconds = other.seconds;
