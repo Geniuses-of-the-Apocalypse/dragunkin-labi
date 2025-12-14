@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 #include <cmath>
+#include <iomanip>
 using namespace std;
 
 class Time {
@@ -50,16 +51,6 @@ public:
         minutes = (totalSeconds % 3600) / 60;
         seconds = totalSeconds % 60;
         normalize();
-    }
-    
-    void read() {
-        cout << "Введите время (часы минуты секунды): ";
-        cin >> hours >> minutes >> seconds;
-        normalize();
-    }
-    
-    void display() const {
-        cout << *this;
     }
     
     string toString() const {
@@ -152,6 +143,14 @@ public:
            << (t.seconds < 10 ? "0" : "") << t.seconds;
         return os;
     }
+friend istream& operator>>(istream &is, Time &t) {
+        char colon1, colon2;
+        is >> t.hours >> t.minutes >> t.seconds;
+      
+            t.normalize();
+        
+        return is;
+}
 };
 
 int main() {
@@ -172,6 +171,10 @@ int main() {
     
     cout << endl;
     
+    Time Time1;
+    cout << "Введите время в формате HH:MM:SS:"<<endl;
+    cin >> Time1;
+    cout<<"время "<<Time1<<endl;
 
     cout << "2. АРИФМЕТИЧЕСКИЕ ОПЕРАТОРЫ:" << endl;
     
@@ -270,7 +273,7 @@ int main() {
     Time demo(2, 30, 45);
     
     // display() использует перегрузку <<
-    cout << "display(): "; demo.display(); cout << endl;
+    cout <<  demo << endl;
     
     // toString() использует перегрузку <<
     cout << "toString(): " << demo.toString() << endl;
