@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+
 using namespace std;
 
 class Triad {
@@ -50,11 +51,12 @@ public:
     }
     
 
-    bool equals(const Triad& other) const {
+     bool operator==(const Triad& other) const {
         return (first == other.first) && 
                (second == other.second) && 
                (third == other.third);
-    }
+     }
+     
     
     // Преобразование в строку
     string toString() const {
@@ -62,9 +64,11 @@ public:
     }
     
     // Вывод на экран
-    void display() const {
-        cout << toString();
+    friend ostream& operator<<(ostream& os, const Triad& t) {
+        os << t.toString();
+        return os;
     }
+    
 };
 
 // Производный класс Time
@@ -79,7 +83,7 @@ public:
             exit(1);
         }
     }
-    
+   
 
     void normalize() {
         
@@ -127,13 +131,7 @@ public:
     }
     
    
-    bool operator==(const Time& other) const {
-        return (first == other.first) && (second == other.second) && (third == other.third);
-    }
-    
-    bool operator!=(const Time& other) const {
-        return !(*this == other);
-    }
+  
     
     bool operator<(const Time& other) const {
         if (first != other.first) return first < other.first;
@@ -161,8 +159,10 @@ public:
         return h + ":" + m + ":" + s;
     }
     
-    void display() const {
-        cout << toString();
+    friend ostream& operator<<(ostream& os, const Time& t) {
+        os << t.toString();
+        return os;
+    
     }
 };
 
@@ -174,17 +174,17 @@ int main() {
     
     Triad t1(1, 2, 3);
     Triad t2(4, 5, 6);
-    cout << "t1 = "; t1.display(); cout << endl;
-    cout << "t2 = "; t2.display(); cout << endl;
-    cout << "t1 equals t2: " << (t1.equals(t2) ? "да" : "нет") << endl;
+    cout << "t1 = " <<t1 << endl;
+    cout << "t2 = " <<t2 << endl;
+    cout << "t1 == t2: " << (t1 ==(t2) ? "да" : "нет") << endl;
     
     // 2. ДЕМОНСТРАЦИЯ ПРОИЗВОДНОГО КЛАССА
     cout << "\n2. ПРОИЗВОДНЫЙ КЛАСС TIME:" << endl;
     
     Time time1(10, 30, 45);
     Time time2(14, 15, 20);
-    cout << "time1 = "; time1.display(); cout << endl;
-    cout << "time2 = "; time2.display(); cout << endl;
+    cout << "time1 = "<< time1 << endl;
+    cout << "time2 = "<<time2 << endl;
     
     // 3. МЕТОДЫ СРАВНЕНИЯ
     cout << "\n3. СРАВНЕНИЕ ВРЕМЕНИ:" << endl;
@@ -193,16 +193,16 @@ int main() {
     Time noon(12, 0, 0);
     Time evening(18, 0, 0);
     
-    cout << "Утро = "; morning.display(); 
-    cout << " < Обед = "; noon.display();
+    cout << "Утро = "<<morning; 
+    cout << " < Обед = "<< noon;
     cout << " : " << (morning < noon ? "да" : "нет") << endl;
     
-    cout << "Утро = "; morning.display();
-    cout << " == Обед = "; noon.display();
+    cout << "Утро = "<< morning;
+    cout << " == Обед = "<< noon;
     cout << " : " << (morning == noon ? "да" : "нет") << endl;
     
-    cout << "Вечер = "; evening.display();
-    cout << " > Обед = "; noon.display();
+    cout << "Вечер = "<< evening;
+    cout << " > Обед = "<< noon;
     cout << " : " << (evening > noon ? "да" : "нет") << endl;
     
     
@@ -210,7 +210,7 @@ int main() {
     
     Time times[3] = {Time(9,0,0), Time(12,30,0), Time(17,45,0)};
     for (int i = 0; i < 3; i++) {
-        cout << "times[" << i << "] = "; times[i].display(); cout << endl;
+        cout << "times[" << i << "] = "<< times[i] << endl;
     }
     
    
@@ -218,15 +218,15 @@ int main() {
     
  
     Time myTime(15, 20, 25);
-    cout << "Объект Time: "; myTime.display(); cout << endl;
+    cout << "Объект Time: "<<myTime << endl;
     
 
     Triad* triadPtr = &myTime;
-    cout << "Через указатель Triad*: "; triadPtr->display(); cout << endl;
+    cout << "Через указатель Triad*: "<< *triadPtr << endl;
     
     
     Triad& triadRef = myTime;
-    cout << "Через ссылку Triad&: "; triadRef.display(); cout << endl;
+    cout << "Через ссылку Triad&: "<< triadRef << endl;
     
   
     cout << "getFirst() для Time: " << myTime.getFirst() << endl;
@@ -235,7 +235,7 @@ int main() {
     
     
     Triad baseTriad(15, 20, 25);
-    cout << "Time equals Triad(15,20,25): " << myTime.equals(baseTriad) << endl;
+     cout << "Time " << myTime << " == Triad " << baseTriad << " : " << (myTime == baseTriad ? "да" : "нет") << endl;
     
     
     cout << "\nМассив указателей Triad* на разные объекты:" << endl;
@@ -245,8 +245,7 @@ int main() {
     objects[2] = new Triad(2, 2, 2);       
     
     for (int i = 0; i < 3; i++) {
-        cout << "objects[" << i << "] = ";
-        objects[i]->display();
+        cout << "objects[" << i << "] = " << *objects[i]; 
         cout << " (тип: " << (i == 1 ? "Time" : "Triad") << ")" << endl;
     }
     
