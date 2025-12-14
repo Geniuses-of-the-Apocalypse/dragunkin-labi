@@ -52,10 +52,8 @@ public:
         normalize();
     }
     
-    Time(const Time &other) hours(other.hours), minutes(other.minutes), seconds(other.seconds) {
-        hours = other.hours;
-        minutes = other.minutes;
-        seconds = other.seconds;
+    Time(const Time &other) : hours(other.hours), minutes(other.minutes), seconds(other.seconds) 
+{
     }
     
     void read() {
