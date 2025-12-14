@@ -37,14 +37,18 @@ public:
         return new Array(0);
     }
 
-
-    void display() {
-        cout << "[";
+    virtual string toString() const {
+        string result = "[";
         for (int i = 0; i < size; i++) {
-            cout << (int)data[i];
-            if (i < size - 1) cout << " ";
+            result += to_string((int)data[i]);
+            if (i < size - 1) result += " ";
         }
-        cout << "]" << endl;
+        result += "]";
+        return result;
+    }
+    friend ostream& operator<<(ostream& os, const Array& arr) {
+        os << arr.toString();
+        return os;
     }
 
     int getSize() { return size; }
@@ -75,12 +79,12 @@ public:
         return result;
     }
 
-    void displayDecimal() {
-       
-        for (int i = size - 1; i >= 0; i--) {
-            cout << (int)data[i];
-        }
-        cout << endl;
+    string toString() const override {
+        string result = "";
+        for (int i = size - 1; i >= 0; i--) 
+            result += to_string((int)data[i]);
+        
+        return result;
     }
 };
 
@@ -107,16 +111,16 @@ public:
         return result;
     }
 
-    void displayHex() {
-        cout << "0x";
+   string toString() const override {
+        string result = "0x";
         for (int i = size - 1; i >= 0; i--) {
             if (data[i] < 10) {
-                cout << (int)data[i];
+                result += to_string((int)data[i]);
             } else {
-                cout << (char)('A' + data[i] - 10);
+                result += (char)('A' + data[i] - 10);
             }
         }
-        cout << endl;
+        return result;
     }
     };
 
@@ -126,28 +130,28 @@ int main() {
    
     cout << "\n1. БАЗОВЫЙ КЛАСС ARRAY:" << endl;
     Array arr1(5, 1);  // массив из 5 элементов со значением 1
-    cout << "arr1 = "; arr1.display();
+    cout << "arr1 = "<<arr1<<endl;
 
     cout<<"Проверка оператора []"<<endl;
     cout << "arr1[2] = " << (int)arr1[2] << endl;
     arr1[2] = 9;
-    cout << "После arr1[2] = 9: "; arr1.display();
+    cout << "После arr1[2] = 9: "<<arr1<<endl;
 
   
     cout << "\n2. КЛАСС DECIMAL:" << endl;
     Decimal dec1(3, 5);  // +555
     Decimal dec2(2, 3);  // +33
     
-    cout << "dec1 = "; dec1.displayDecimal();
-    cout << "dec2 = "; dec2.displayDecimal();
+    cout << "dec1 = "<< dec1<<endl;
+    cout << "dec2 = " <<dec2<<endl;
 
    
     cout << "\n3. КЛАСС HEX:" << endl;
     Hex hex1(3, 10);  // 0xAAA (A=10)
     Hex hex2(2, 5);   // 0x55
     
-    cout << "hex1 = "; hex1.displayHex();
-    cout << "hex2 = "; hex2.displayHex();
+    cout << "hex1 = "<< hex1<<endl;
+    cout << "hex2 = "<< hex2<<endl;
 
    
     cout << "\n4. ВИРТУАЛЬНЫЕ ФУНКЦИИ СЛОЖЕНИЯ:" << endl;
@@ -160,17 +164,17 @@ int main() {
    
     cout << "ptr1->add(dec2): "; 
     Array* result1 = ptr1->add(dec2);
-    result1->display();
+    cout << *result1 << endl;
     delete result1;
     
     cout << "ptr2->add(hex2): ";
     Array* result2 = ptr2->add(hex2);
-    result2->display();
+    cout << *result2 << endl;
     delete result2;
 
     cout << "ptr3->add(arr1): ";
     Array* result3 = ptr3->add(arr1);
-    result3->display();
+    cout << *result3 << endl;
     delete result3;
 
   
@@ -181,13 +185,12 @@ int main() {
     objects[2] = new Array(3, 2);           // [2,2,2]
 
     for (int i = 0; i < 3; i++) {
-        cout << "objects[" << i << "] = ";
-        objects[i]->display();
+        cout << "objects[" << i << "] = " << *objects[i] << endl;
         
         // Вызов виртуального метода
         cout << "objects[" << i << "]->add(*objects[" << i << "]): ";
         Array* result = objects[i]->add(*objects[i]);
-        result->display();
+        cout << *result << endl;
         delete result;
     }
 
@@ -197,14 +200,14 @@ int main() {
     // Прямой вызов
     cout << "Прямой вызов dec1.add(dec2): ";
     Array* directCall = dec1.add(dec2);
-    directCall->display();
+    cout << *directCall << endl;
     delete directCall;
 
     // Через ссылку базового класса
     Array& ref = hex1;
     cout << "Через ссылку ref.add(hex2): ";
     Array* refCall = ref.add(hex2);
-    refCall->display();
+    cout << *refCall << endl;
     delete refCall;
 
     
