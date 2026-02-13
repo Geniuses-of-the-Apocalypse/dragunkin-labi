@@ -3,6 +3,10 @@ import java.util.Scanner;
 public class FuzzyNumber {
 
     private float left, centr, right;
+    float al;
+    float ar;
+    float bl ;
+    float br ;
 
 
     public void init(float l, float c, float r) {
@@ -17,6 +21,14 @@ public class FuzzyNumber {
         centr = s.nextFloat();
         right = s.nextFloat();
     }
+    public FuzzyNumber rf(FuzzyNumber other) {
+        FuzzyNumber res = new FuzzyNumber();
+        res.al = centr - left;
+        res.ar = right - centr;
+        res.bl = other.centr - other.left;
+        res.br = other.right - other.centr;
+        return res;
+    }
 
     public String toString() {
         return "(" + left + "," + centr + "," + right + ")";
@@ -26,51 +38,36 @@ public class FuzzyNumber {
         System.out.println(toString());
     }
 
-    private float l() {
-        return centr - left;
-    }
 
-    private float r() {
-        return right - centr;
-    }
 
     public FuzzyNumber add(FuzzyNumber other) {
         FuzzyNumber res = new FuzzyNumber();
-        float al = l();
-        float ar = r();
-        float bl = other.l();
-        float br = other.r();
+        FuzzyNumber d = rf(other);
         //(A + B – a1 – b1, A + B, A + B + ar + br);
-        res.left = centr + other.centr -al -bl;
+        res.left = (centr + other.centr) - d.al - d.bl;
         res.centr = centr + other.centr;
-        res.right = centr + other.centr +ar +br;
+        res.right = centr + other.centr + d.ar + d.br;
         return res;
     }
 
 
     public FuzzyNumber rem(FuzzyNumber other) {
         FuzzyNumber res = new FuzzyNumber();
-        float al = l();
-        float ar = r();
-        float bl = other.l();
-        float br = other.r();
+        FuzzyNumber d = rf(other);
         //(A – B – a1 – b1, A – B, A – B + ar + br);
-        res.left = centr - other.centr -al -bl;
+        res.left = centr - other.centr -d.al -d.bl;
         res.centr = centr - other.centr;
-        res.right = centr - other.centr +ar +br;
+        res.right = centr - other.centr +d.ar +d.br;
         return res;
     }
     public FuzzyNumber um(FuzzyNumber other) {
         FuzzyNumber res = new FuzzyNumber();
-        float al = l();
-        //float ar = getr();
-        float bl = other.l();
-        //float br = other.getr();
+        FuzzyNumber d = rf(other);
 
         //= (A*B – B*a1 – A*b1 + a1*b1, A*B, A*B + B*a1 + A*b1 + a1*b1);
         float c = centr * other.centr;
-        float l = c - other.centr * al - centr * bl + al * bl;
-        float r = c + other.centr * al + centr * bl + al * bl;
+        float l = c - other.centr * d.al - centr * d.bl + d.al * d.bl;
+        float r = c + other.centr * d.al + centr * d.bl + d.al * d.bl;
         res.left = l;
         res.centr = c;
         res.right = r;
@@ -81,8 +78,8 @@ public class FuzzyNumber {
         if (centr <= 0)
             System.out.println("число больше 0 для обратного и не 0 по правилу матеатики");
         FuzzyNumber res = new FuzzyNumber();
-        float al = l();
-        float ar = r();
+        float al = centr-left;
+        float ar = right-centr;
         // (1/(A + ar), 1/A, 1/(A – al)), A > 0;
         res.left = 1 / (centr + ar);
         res.centr = 1 / centr;
@@ -94,15 +91,12 @@ public class FuzzyNumber {
         if (other.centr <= 0)
             System.out.println("число больше 0 для обратного и не 0 по правилу матеатики");
         FuzzyNumber res = new FuzzyNumber();
-        float al = l();
-        float ar = r();
-        float bl = other.l();
-        float br = other.r();
+        FuzzyNumber d = rf(other);
 
         //((A – al)/(B + br), A/B, (A + ar)/(B – bl), B > 0.
-        res.left = ((centr - al) / (other.centr + br));
+        res.left = ((centr - d.al) / (other.centr + d.br));
         res.centr = centr / other.centr;
-        res.right = (centr + ar) / (other.centr - bl);
+        res.right = (centr + d.ar) / (other.centr - d.bl);
 
         return res;
     }
