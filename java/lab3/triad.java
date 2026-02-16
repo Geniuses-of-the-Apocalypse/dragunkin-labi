@@ -8,7 +8,17 @@ public class Triad {
  public Triad(int p,int d, int t) {
      this.p=p;
      this.d=d;
-     this.t=t;}
+     this.t=t;};
+ public Triad(Triad o){
+     p = o.p;
+     d=o.d;
+     t = o.t; };
+ public Triad(){
+     p = 0;
+     d=0;
+     t = 0;
+
+ }
  public void setp(int value) {p=value;};
  public void setd(int value){d=value;};
  public void sedt(int value){t=value;};
