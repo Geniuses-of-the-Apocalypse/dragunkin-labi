@@ -9,6 +9,14 @@ public class time extends Triad {
     public time(int h, int m, int s){
         super(Ppr(h), Mpr(m), Spr(s));
     }
+    public time(){
+       super( h = 0,
+        m=0,
+         s= 0); }
+    public time(time o){
+        super(h = o.h,
+        m=o.m,
+        s = o.s);}
 
     public static int Ppr(int h){
         if(h>=0&&h<24)
