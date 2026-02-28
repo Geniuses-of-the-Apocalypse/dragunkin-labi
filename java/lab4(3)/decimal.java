@@ -1,5 +1,6 @@
 package lab3java;
 
+
 interface Array {
     Array add(Array other);
     void print();
@@ -7,15 +8,13 @@ interface Array {
 
 
 class Decimal implements Array {
-    private String digits;
+    private char[] digits;
     private boolean sign;
 
 
     public Decimal(String s) {
-
-        String zeros = "";
-        for (int i = 0; i < 100; i++) zeros += "0";
-        digits = zeros;
+        digits = new char[100];
+        for (int i = 0; i < 100; i++) digits[i] = '0';
 
 
         if (s.charAt(0) == '-') {
@@ -27,35 +26,28 @@ class Decimal implements Array {
         }
 
 
-        char[] chars = digits.toCharArray();
-
         for (int i = 0; i < s.length(); i++) {
-            chars[i] = s.charAt(s.length() - 1 - i);
+            digits[i] = s.charAt(s.length() - 1 - i);
         }
-
-        digits = new String(chars);
     }
 
-
+    // Получение цифры как числа(код аски - 0 аски)
     private int getDigit(int pos) {
-        return digits.charAt(pos) - '0';
+        return digits[pos] - '0';
     }
 
-
+    // Установка цифры из числа
     private void setDigit(int pos, int value) {
-        char[] chars = digits.toCharArray();
-        chars[pos] = (char)(value + '0');
-        digits = new String(chars);
+        digits[pos] = (char)(value + '0');
     }
 
 
     public Array add(Array other) {
         Decimal b = (Decimal)other;
         Decimal result = new Decimal("0");
+        int carry = 0;  // Перенос
 
-        int carry = 0;  // перенос
-
-
+        // Сложение в столбик
         for (int i = 0; i < 100; i++) {
             int sum = getDigit(i) + b.getDigit(i) + carry;
             result.setDigit(i, sum % 10);
@@ -70,15 +62,15 @@ class Decimal implements Array {
     public void print() {
         if (!sign) System.out.print("-");
 
-
+        // Поиск первой ненулевой цифры
         int i = 99;
-        while (i > 0 && digits.charAt(i) == '0') {
-            i--;
-        }
+        while (i > 0 && digits[i] == '0') i--;
 
+        // Вывод цифр от старшей к младшей
         for (int j = i; j >= 0; j--) {
-            System.out.print(digits.charAt(j));
+            System.out.print(digits[j]);
         }
         System.out.println();
     }
 }
+
