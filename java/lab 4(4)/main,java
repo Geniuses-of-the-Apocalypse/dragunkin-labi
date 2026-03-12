@@ -1,0 +1,45 @@
+package lab4java;
+
+public class MAIN {
+
+        public static void main(String[] args) {
+
+            str a = new str("apple");
+            str b = new str("arbuz");
+            str c = new str("apple");
+
+            System.out.println("=== МЕТОДЫ СРАВНЕНИЯ ===");
+            System.out.println("a = 'apple', b = 'arbuz', c = 'apple'");
+            System.out.println("a < b  (men)  : " + a.men(b));    // true (apple меньше banana)
+            System.out.println("a <= b (menr) : " + a.menr(b));   // true
+            System.out.println("a == b (raf)  : " + a.raf(b));    // false
+            System.out.println("a == c (raf)  : " + a.raf(c));    // true
+            System.out.println("a > b  (bol)  : " + a.bol(b));    // false
+            System.out.println("a >= b (bolr) : " + a.bolr(b));   // false
+            System.out.println("Копия a (suur): " + a.suur());    // apple
+
+            System.out.println("\n=== РАБОТА СО СПИСКОМ ===");
+            DynamicList list = new DynamicList();
+
+            list.add(new str("banana"));
+            list.add(new str("apple"));
+            list.add(new str("orange"));
+            list.add(new str("grape"));
+            list.add(new str("kiwi"));
+
+            System.out.println("Исходный список: " + list);
+
+            list.quickSort();
+            System.out.println("После сортировки: " + list);
+
+            System.out.println("Размер списка: " + list.size());
+            System.out.println("Элемент [2]: " + list.get(2));
+
+            list.remove(1);
+            System.out.println("После удаления [1]: " + list);
+
+            list.add(1, new str("mango"));
+            System.out.println("После вставки 'mango': " + list);
+
+    }
+}
