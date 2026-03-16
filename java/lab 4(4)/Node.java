@@ -1,27 +1,27 @@
 package lab4java;
 
-public class Node {
-    private inter data;
-    private Node next;
+public class Node<T extends inter<T>& Comparable<T>> {
+    private T data;
+    private Node<T> next;
 
-    public Node(inter data) {
+    public Node(T data) {
         this.data = data;
         this.next = null;
     }
 
-    public inter getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(inter data) {
+    public void setData(T data) {
         this.data = data;
     }
 
-    public Node getNext() {
+    public Node<T> getNext() {
         return next;
     }
 
-    public void setNext(Node next) {
+    public void setNext(Node<T> next) {
         this.next = next;
     }
 }
