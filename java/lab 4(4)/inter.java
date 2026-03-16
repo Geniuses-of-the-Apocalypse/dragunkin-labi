@@ -1,10 +1,10 @@
 package lab4java;
 
-public interface inter {
-    inter men( inter other);
-    inter menr( inter other);
-    inter raf(inter other);
-    inter bol(inter other);
-    inter bolr(inter other);
-    inter suur();
+public interface inter<T extends inter<T>> {
+    T men(T other);
+    T menr(T other);
+    T raf(T other);
+    T bol(T other);
+    T bolr(T other);
+    T suur();
 }
