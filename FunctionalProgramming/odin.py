@@ -25,6 +25,6 @@ rows = parse_csv(CSV_DATA)
 
 print("Данные: ")
 print(rows)
-print("\n Выручка: ", compute_revenue(rows))
-print("\n Товар с максимальной выручкой: ")
+print("\n Доход: ", compute_revenue(rows))
+print("\n Максимальная прибыль от товара: ")
 print(top_item(rows))
