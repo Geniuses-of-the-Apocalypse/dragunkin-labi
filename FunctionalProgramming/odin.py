@@ -15,8 +15,7 @@ def parse_csv(data: str) -> list[dict]:
     return list(csv.DictReader(data.splitlines()))
 # 2
 def compute_revenue(rows: list[dict]) -> float:
-    return sum(map(lambda w: int(x["quantity"]) * float(w["price"]), rows))
-    for row in rows)
+    return sum(map(lambda w: int(w["quantity"]) * float(w["price"]), rows))
 # 3
 def top_item(rows: list[dict]) -> Optional[dict]:
     if not rows:
@@ -34,7 +33,7 @@ print("\n Доход: ", compute_revenue(rows))
 print("\n Максимальная прибыль от товара: ")
 print(top_item(rows))
 
-#функция чистая не имеет побочных эффектов 
+#функция чистая не имеет побочных эффектов
 # если csv пустое программа упадет, тк флот и инт пустые, если ставим вместо пустых 0 могут быть побочные эффекты
 # Функция parse_csv. Входит str. Выходит list[dict] — список словарей, где ключи — названия, а значения — строки.
 # Функция compute_revenue -вход список выхож выручка по всем строкам
