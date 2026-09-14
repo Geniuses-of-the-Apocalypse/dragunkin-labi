@@ -20,10 +20,7 @@ def compute_revenue(rows: list[dict]) -> float:
 def top_item(rows: list[dict]) -> Optional[dict]:
     if not rows:
         return None
-    try:
-        return max(rows, key=lambda w: int(w["quantity"]) * float(w["price"]))
-    except (ValueError, TypeError, KeyError):
-        return None
+    return max(rows, key=lambda w: int(w["quantity"]) * float(w["price"]))
 
 rows = parse_csv(CSV_DATA)
 
@@ -38,3 +35,4 @@ print(top_item(rows))
 # Функция parse_csv. Входит str. Выходит list[dict] — список словарей, где ключи — названия, а значения — строки.
 # Функция compute_revenue -вход список выхож выручка по всем строкам
 # Функция top_item входит list[dict]. выходит Optional[dict] - словарь с макс прибылью или none
+# тут нету зациклевания, переменных и инут атпут
