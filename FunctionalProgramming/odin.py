@@ -20,13 +20,11 @@ def compute_revenue(rows: list[dict]) -> float:
 def top_item(rows: list[dict]) -> Optional[dict]:
     return next(iter(sorted(rows, key=lambda w: float(w["quantity"]) * float(w["price"]), reverse=True)), None)
 
-rows = parse_csv(CSV_DATA)
-
 print("Данные: ")
-print(rows)
-print("\n Доход: ", compute_revenue(rows))
+print(parse_csv(CSV_DATA))
+print("\n Доход: ", compute_revenue(parse_csv(CSV_DATA)))
 print("\n Максимальная прибыль от товара: ")
-print(top_item(rows))
+print(top_item(parse_csv(CSV_DATA)))
 
 #функция чистая не имеет побочных эффектов
 # если csv пустое программа упадет, тк флот и инт пустые, если ставим вместо пустых 0 могут быть побочные эффекты
