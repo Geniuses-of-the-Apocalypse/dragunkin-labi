@@ -1,3 +1,12 @@
+
+
+
+Лаба подтверждена:
+7bf6e256eb431f0a2e7986e0ebd78596
+
+
+
+
 import csv
 from typing import Optional
 
@@ -32,3 +41,5 @@ print(top_item(parse_csv(CSV_DATA)))
 # Функция compute_revenue -вход список выхож выручка по всем строкам
 # Функция top_item входит list[dict]. выходит Optional[dict] - словарь с макс прибылью или none
 # тут нету зациклевания, переменных и инут атпут
+
+
