@@ -38,7 +38,7 @@ def load_users() -> Result[list[User], str]:
         User("vladimir", 35, "dhshrheksi726@mail.ru"),
     ]
     if not users:
-        return Failure("Список пользователей пуст")
+        return Failure("Список людей пустой")
     return Success(users)
 
 
@@ -46,6 +46,6 @@ result = load_users()
 
 match result:
     case Success(value):
-        print("Пользователи:", value)
+        print("Люди:", value)
     case Failure(error):
-        print("Ошибка:", error)
+        print("тотальный ошибка:", error)
