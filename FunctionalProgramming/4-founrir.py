@@ -1,31 +1,26 @@
 from functools import partial
 
-def filter_by(key, value, items):
-    return [item for item in items if item.get(key) == value]
+filter_by = lambda key: lambda value: lambda items: [
+     item for item in items if item.get(key) == value
+]
+filter_by_category = partial( lambda key, value, items: [item for item in items if item.get(key) == value], "category")
 
-filter_by_category = partial(filter_by, "category")
+greater_than = lambda threshold:  lambda value: value > threshold
 
-def greater_than(threshold, value):
-    return value > threshold
+items = [{"name": "Яблоко", "category": "фрукты", "price": 50},
+        {"name": "Молоко", "category": "молочное", "price": 80},
+        {"name": "Банан", "category": "фрукты", "price": 30},
+        {"name": "Сыр", "category": "молочное", "price": 200},]
 
 if __name__ == "__main__":
 
-    fruits = filter_by("category", "фрукты", [
-        {"name": "Яблоко", "category": "фрукты", "price": 50},
-        {"name": "Молоко", "category": "молочное", "price": 80},
-        {"name": "Банан", "category": "фрукты", "price": 30},
-        {"name": "Сыр", "category": "молочное", "price": 200},
-    ])
-    print("фрукты:", fruits)
 
-    dairy = filter_by_category("молочное", [
-        {"name": "Яблоко", "category": "фрукты", "price": 50},
-        {"name": "Молоко", "category": "молочное", "price": 80},
-        {"name": "Банан", "category": "фрукты", "price": 30},
-        {"name": "Сыр", "category": "молочное", "price": 200},
-    ])
-    print("молочное:", dairy)
+    print("фрукты:", items)
 
+    dairy = partial(filter_by_category, "молочное")
+    print(dairy(items))
+
+    over_seven = greater_than(7)
     numbers = [1, 5, 8, 12, 3, 20, 7]
-    big = list(filter(partial(greater_than, 7), numbers))
+    big = list(filter(over_seven, numbers))
     print("числа > 7:", big)
