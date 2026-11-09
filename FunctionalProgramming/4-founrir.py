@@ -1,26 +1,21 @@
 from functools import partial
 
-filter_by = lambda key: lambda value: lambda items: [
-     item for item in items if item.get(key) == value
-]
-filter_by_category = partial( lambda key, value, items: [item for item in items if item.get(key) == value], "category")
+FILTER_BY = lambda key: lambda value: lambda items: tuple(
+     item for item in items if item.get(key) == value)
+FILTER_BY_CATEGORY = partial( lambda key, value, items: tuple(item for item in items if item.get(key) == value), "category")
 
-greater_than = lambda threshold:  lambda value: value > threshold
-
-items = [{"name": "Яблоко", "category": "фрукты", "price": 50},
-        {"name": "Молоко", "category": "молочное", "price": 80},
-        {"name": "Банан", "category": "фрукты", "price": 30},
-        {"name": "Сыр", "category": "молочное", "price": 200},]
+GREATHER_THAN = lambda threshold: lambda value: value > threshold
 
 if __name__ == "__main__":
 
+    print("фрукты:",  [{"name": "Яблоко", "category": "фрукты", "price": 50},
+        {"name": "Молоко", "category": "молочное", "price": 80},
+        {"name": "Банан", "category": "фрукты", "price": 30},
+        {"name": "Сыр", "category": "молочное", "price": 200},])
 
-    print("фрукты:", items)
+    print("\nмолочное:", partial(FILTER_BY_CATEGORY, "молочное")( [{"name": "Яблоко", "category": "фрукты", "price": 50},
+        {"name": "Молоко", "category": "молочное", "price": 80},
+        {"name": "Банан", "category": "фрукты", "price": 30},
+        {"name": "Сыр", "category": "молочное", "price": 200},]))
 
-    dairy = partial(filter_by_category, "молочное")
-    print(dairy(items))
-
-    over_seven = greater_than(7)
-    numbers = [1, 5, 8, 12, 3, 20, 7]
-    big = list(filter(over_seven, numbers))
-    print("числа > 7:", big)
+    print("числа > 7:", tuple(filter( GREATHER_THAN(7), [1, 5, 8, 12, 3, 20, 7])))
