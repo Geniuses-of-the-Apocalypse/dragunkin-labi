@@ -1,50 +1,32 @@
 lab 6 зачет 6ec0e83f6738b8d1d603eec3bc9d2fdc1745dee9231f18f3a3bea4a4f8ac07cf
 
-ORDERS = (
-    {"id": 1, "total": 1500.0, "status": "completed"},
-    {"id": 2, "total": 320.5,  "status": "pending"},
-    {"id": 3, "total": 890.0,  "status": "completed"},
-    {"id": 4, "total": 45.0,   "status": "cancelled"},
-)
+from typing import Any, Callable
 
-print(tuple(map(lambda order: order["total"], ORDERS)))
+def totals(orders):
+    def run():
+        return map(lambda o: o["total"], orders)
+    return run
 
-class OptionalBox:
-    def __init__(self, value=None, _lazy=None):
-        self._value = value
-        self._lazy = _lazy         
-    @property
-    def value(self):
-        if self._lazy is not None:
-            self._value = self._lazy()
-            self._lazy = None      
-        return self._value
+class Box:
+    def __init__(self, v): self.v = v
+    def map(self, f): return Box(f(self.v)) if self.v is not None else Box(None)
+    def val(self): return self.v
 
-    def map(self, func):
-        
-        def lazy():
-            V = self.value
-            return None if v is None else func(V)
-        return OptionalBox(_lazy=lazy)
+def find(orders, oid):
+    def run():
+        it = iter(filter(lambda o: o["id"] == oid, orders))
+        return Box(next(it, None))
+    return run
 
-    def __iter__(self):
-        
-        V = self.value
-        if V is not None:
-            yield V
+if __name__ == "__main__":
+    data = [{"id": 1, "total": 150.0}, {"id": 2, "total": 300.5}]
 
-    def __repr__(self):
-        if self._lazy is not None:
-            return "OptionalBox(<lazy>)"
-        return f"OptionalBox({self._value!r})"
+    get_totals = totals(data)       
+    find_order = find(data, 2)        
 
-
-def find_order(orders, order_id):
-    return OptionalBox(next((o for o in orders if o["id"] == order_id), None))
-
-print(find_order(ORDERS, 2))
-print(find_order(ORDERS, 99))
-
+    print("1:", tuple(get_totals()))   
+    print("2:", find_order().map(lambda o: o["total"]).val())
+    print("3:", find(data, 99)().val())
 
 
 
