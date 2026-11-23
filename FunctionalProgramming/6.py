@@ -27,9 +27,9 @@ class OptionalBox:
 
     def __iter__(self):
         
-        v = self.value
-        if v is not None:
-            yield v
+        V = self.value
+        if V is not None:
+            yield V
 
     def __repr__(self):
         if self._lazy is not None:
