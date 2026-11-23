@@ -1,3 +1,5 @@
+lab 5 зачтено: ea6928a556afe7a9e2936fec7c75df45296dc95c77d2a365af5a1770fd8f7e9d -
+
 from functools import reduce
 
 print(tuple(map(lambda s: f"Имя: {s['name']}, Оценка: {s['grade']}", [
