@@ -21,8 +21,8 @@ class OptionalBox:
     def map(self, func):
         
         def lazy():
-            v = self.value
-            return None if v is None else func(v)
+            V = self.value
+            return None if v is None else func(V)
         return OptionalBox(_lazy=lazy)
 
     def __iter__(self):
