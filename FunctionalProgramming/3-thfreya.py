@@ -1,3 +1,7 @@
+Лаба 3 подтверждена: 67a05eeabc9c5af8546850e314795905
+
+
+
 from dataclasses import dataclass
 from enum import Enum
 from typing import Generic, TypeVar, Union
