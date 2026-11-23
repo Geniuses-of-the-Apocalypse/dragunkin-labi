@@ -1,3 +1,5 @@
+lab 6 зачет 6ec0e83f6738b8d1d603eec3bc9d2fdc1745dee9231f18f3a3bea4a4f8ac07cf
+
 ORDERS = (
     {"id": 1, "total": 1500.0, "status": "completed"},
     {"id": 2, "total": 320.5,  "status": "pending"},
