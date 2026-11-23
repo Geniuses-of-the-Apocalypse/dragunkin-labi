@@ -1,3 +1,5 @@
+Лаба 2 подтверждена: 2d3caded7a23e6245fe56a979bb2407d
+
 from typing import Optional
 import re
 from collections import Counter
