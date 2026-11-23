@@ -8,7 +8,7 @@ ORDERS = (
 print(tuple(map(lambda order: order["total"], ORDERS)))
 
 class OptionalBox:
-    def init(self, value):
+    def __init__(self, value):
         self.value = value
 
     def map(self, func):
@@ -16,7 +16,7 @@ class OptionalBox:
             return OptionalBox(None)
         return OptionalBox(func(self.value))
 
-    def repr(self):
+    def __repr__(self):
         return f"OptionalBox({self.value!r})"
 
 def find_order(orders, order_id):
