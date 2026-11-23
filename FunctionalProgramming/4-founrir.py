@@ -1,3 +1,7 @@
+lab 4 зачтено: c0900a1d35f07e74b0f9fbb1b3a21bbe975fdc3a1f21a6dc2098f9ab75bb5f28
+
+
+
 from functools import partial
 
 FILTER_BY = lambda key: lambda value: lambda items: tuple(
